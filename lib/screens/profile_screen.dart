@@ -15,6 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String password = '';
   String dob = '';
   String phone = '';
+  String pregnancyWeek = '';
 
   @override
   void initState() {
@@ -30,6 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       password = prefs.getString('password') ?? '';
       dob = prefs.getString('dob') ?? '';
       phone = prefs.getString('phone') ?? '';
+      pregnancyWeek = prefs.getString('pregnancyWeek') ?? '';
     });
   }
 
@@ -154,6 +156,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               initialValue: phone,
                               decoration: const InputDecoration(
                                 labelText: 'Phone',
+                                labelStyle: TextStyle(color: Colors.white70),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(vertical: 15),
+                              ),
+                              style: const TextStyle(color: Colors.white),
+                              enabled: false,
+                            ),
+                            const Divider(color: Colors.white70, thickness: 1),
+                            const SizedBox(height: 20),
+                            TextFormField(
+                              initialValue: pregnancyWeek.isEmpty ? 'Not specified' : pregnancyWeek,
+                              decoration: const InputDecoration(
+                                labelText: 'Pregnancy Week',
                                 labelStyle: TextStyle(color: Colors.white70),
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.symmetric(vertical: 15),

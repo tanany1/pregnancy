@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,6 +22,9 @@ class _LoginScreenState extends State<LoginScreen> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      // Save login state
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
       Navigator.pushReplacementNamed(context, '/main');
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -114,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                         const Divider(color: Colors.white70, thickness: 1),
-                        const SizedBox(height: 20), // Enhanced field separation
+                        const SizedBox(height: 20),
                         TextFormField(
                           controller: passwordController,
                           decoration: const InputDecoration(
