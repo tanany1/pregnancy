@@ -2,111 +2,69 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<Map<String, String>> weekData = [
+  final List<Map<String, String?>> monthData = [
     {
-      'week': '4',
-      'babyInfo': 'A ball of cells called a blastocyst has officially become an embryo, roughly the size of a poppy seed. This is when organ development begins, lasting approximately six weeks.',
-      'lifeAdvice': 'Start taking prenatal vitamins with folic acid to support early development. Focus on a healthy diet and avoid alcohol or smoking to ensure a strong start for your baby.'
+      'month': '1-2',
+      'weeks': '1 to 8',
+      'babyInfo': 'The egg is fertilized. The fertilized egg rapidly multiplies in the uterus. Weeks 5 to 8 bring the embryo stages of development. The neural tube begins to form (brain, followed by the spinal cord). Cardiac tissue starts to develop. Buds for the arms and legs appear. The face begins to take shape. Major organs begin to develop, the webbed fingers & toes appear. By the end of week 8, it will become the digits/hands and feet. The embryo is about 1/2 inch long.',
+      'lifeAdvice': 'Nutrition: Focus on whole foods like fruits, vegetables, whole grains, lean proteins, and healthy fats. Avoid processed and sugary foods to prevent weight gain and support baby’s health. Get enough folic acid from leafy greens and citrus fruits to support fetal development.\n\nExercise: Continue your regular exercise routine, avoiding high-impact activities. Prenatal yoga can help with relaxation and strengthen labor muscles. Walking is a simple, beneficial exercise to maintain fitness.\n\nHealthcare: Schedule a doctor’s appointment to confirm pregnancy and discuss concerns. Regularly monitor your health and report unusual symptoms to your doctor.',
+      'image': 'assets/1-2.jpg',
     },
     {
-      'week': '5',
-      'babyInfo': 'The baby’s heart begins to beat, generally at about twice the rate of an adult heart.',
-      'lifeAdvice': 'Schedule your first prenatal appointment to confirm your pregnancy. Rest often to manage early fatigue, and eat small, frequent meals to ease nausea.'
+      'month': '3',
+      'weeks': '9 to 12',
+      'babyInfo': 'Cartilage for the limbs, hands, feet, fingers, & toes forms. The major internal organs are present. The eyelids close & will not reopen until about the 28th week. The external genitals develop. The fetus begins to make spontaneous movements. The fetus is about 2 1/2 inches long & weighs about 1/2 ounce.',
+      'lifeAdvice': 'Nutrition: Include protein-rich foods like lean meats, fish, eggs, and legumes to support baby’s growth. Consume vitamin C-rich foods (citrus fruits, strawberries, bell peppers) for immune function and iron absorption. Limit caffeine to 200mg or less daily to reduce miscarriage risk.\n\nExercise: Engage in prenatal Pilates for core strength, flexibility, and posture. Swimming is a low-impact way to stay active and relaxed. Practice Kegel exercises to strengthen pelvic floor muscles.\n\nHealthcare: Discuss genetic testing options with your provider. Monitor blood pressure to ensure it stays in a healthy range. Report any concerns to your healthcare provider.\n\nMorning Sickness: If experiencing severe morning sickness, consult your provider for treatment options.',
+      'image': null,
     },
     {
-      'week': '6',
-      'babyInfo': 'Facial features begin to form, and little buds for the arms and legs start to develop.',
-      'lifeAdvice': 'Stay hydrated and get plenty of rest to support your body’s changes. Begin tracking your symptoms and share them with your doctor at your next visit.'
+      'month': '4',
+      'weeks': '13 to 16',
+      'babyInfo': 'Sex may be visible on an ultrasound. The fetus begins to suck and swallow. Downy hair begins to develop. The fetus begins to move. The fetus is about 6 inches long & 4 ounces in weight.',
+      'lifeAdvice': 'Nutrition: Eat iron-rich foods like lean meats, spinach, and fortified cereals to prevent anemia. Consume fiber-rich foods (whole grains, fruits, vegetables) to prevent constipation. Stay hydrated to support increased blood volume.\n\nExercise: Continue prenatal yoga for flexibility and balance. Regular walking boosts cardiovascular health. Practice pelvic tilts to strengthen core muscles.\n\nHealthcare: Schedule an anatomy scan (18-22 weeks) to monitor baby’s growth. Track weight gain to ensure it’s within a healthy range. Discuss your birth plan with your provider.\n\nQuickening: You may feel baby’s movements. If you have trouble feeling them, consult your provider.',
+      'image': 'assets/4.jpg',
     },
     {
-      'week': '10',
-      'babyInfo': 'The embryo officially becomes a fetus. Organs like kidneys, intestines, brain, and liver are beginning to function, and fingernails and toenails are starting to form.',
-      'lifeAdvice': 'Focus on a balanced diet rich in protein and iron to support organ development. Avoid stress by practicing relaxation techniques like deep breathing or meditation.'
+      'month': '5',
+      'weeks': '17 to 20',
+      'babyInfo': 'Hair, eyebrows, and eyelashes appear. The skin is covered with a waxy coating. The mother begins to feel the fetus move. The fetus is about 10 inches long & weighs about 1/2 to 1 pound.',
+      'lifeAdvice': 'Nutrition: Include omega-3 rich foods like salmon, walnuts, and chia seeds for baby’s brain development. Consume calcium-rich foods (dairy, leafy greens, fortified plant-based milk) for bone growth. Avoid undercooked or raw foods to prevent foodborne illnesses.\n\nExercise: Continue prenatal Pilates for core strength and flexibility. Swimming keeps you active and comfortable. Practice Kegel exercises for pelvic floor strength.\n\nHealthcare: Schedule a glucose screening (24-28 weeks) to check for gestational diabetes. Monitor baby’s movements and report concerns. Attend childbirth classes and build a support network.',
+      'image': null,
     },
     {
-      'week': '12',
-      'babyInfo': 'You’ll likely be able to hear the baby’s heartbeat at a prenatal checkup, though this may have already happened at an ultrasound.',
-      'lifeAdvice': 'Celebrate hearing your baby’s heartbeat by sharing the moment with loved ones. Continue prenatal care and start planning for your second trimester needs.'
+      'month': '6',
+      'weeks': '21 to 24',
+      'babyInfo': 'The skin looks wrinkled. The fetus may hiccup. The eyes begin to open. Finger and toe prints are visible. The fetus is about 12 inches long & weighs about 1 1/2 pounds.',
+      'lifeAdvice': 'Nutrition: Eat vitamin C-rich foods (citrus fruits, strawberries, bell peppers) for immune system support. Consume protein-rich foods (lean meats, fish, legumes) for growth. Stay hydrated to support blood volume.\n\nExercise: Continue prenatal yoga for flexibility and breathing techniques. Regular walking boosts energy. Practice pelvic floor exercises for childbirth preparation.\n\nHealthcare: Schedule regular check-ups to monitor baby’s growth. Discuss pain management options for childbirth. Start preparing your nursery with essential items.\n\nBaby’s Development: Lungs are maturing, and baby is practicing breathing movements. Skin thickens, and fat layers form.',
+      'image': 'assets/6.jpg',
     },
     {
-      'week': '14',
-      'babyInfo': 'The baby’s kidneys are producing urine that’s released into the amniotic fluid. The baby can make facial expressions and may begin sucking his or her thumb.',
-      'lifeAdvice': 'Enjoy your increased energy by taking short walks or trying prenatal yoga. Stay hydrated to support amniotic fluid production and manage any headaches.'
+      'month': '7',
+      'weeks': '25 to 28',
+      'babyInfo': 'The fetus is very active. The fetus responds to sound. The eyes can open & shut. The fetus is about 14 inches long & weighs about 2 1/2 pounds.',
+      'lifeAdvice': 'Nutrition: Eat iron-rich foods (lean meats, spinach, fortified cereals) to prevent anemia. Include omega-6 rich foods (sunflower seeds, pumpkin seeds) for skin and brain development. Stay hydrated.\n\nExercise: Continue prenatal Pilates for flexibility and posture. Swimming keeps you relaxed. Practice breathing exercises for childbirth and stress management.\n\nHealthcare: Schedule regular check-ups to monitor growth. Finalize your birth plan. Prepare for breastfeeding by learning about lactation.\n\nBaby’s Development: Brain develops rapidly, and baby practices sucking and swallowing. Skin thickens, and fat layers form.',
+      'image': null,
     },
     {
-      'week': '16',
-      'babyInfo': 'The baby’s gender might be detectable at a mid-pregnancy ultrasound, which is generally done between 16 and 20 weeks into pregnancy.',
-      'lifeAdvice': 'Prepare for your mid-pregnancy ultrasound by drinking plenty of water for clearer images. Start thinking about baby names if you learn the gender!'
+      'month': '8',
+      'weeks': '29 to 32',
+      'babyInfo': 'The fetus gains weight rapidly. Bones harden except for the skull. The different regions of the brain form. The fetus is about 18 inches long & weighs about 4 pounds.',
+      'lifeAdvice': 'Nutrition: Eat fiber-rich foods (whole grains, fruits, vegetables) to prevent constipation. Consume calcium-rich foods (dairy, leafy greens) for bone growth. Stay hydrated.\n\nExercise: Consider prenatal massage to reduce stress and improve circulation. Practice Kegel exercises for pelvic floor strength. Take short walks to stay active.\n\nHealthcare: Schedule regular check-ups to monitor growth. Finalize your birth plan. Attend parenting classes and build a support network.\n\nBaby’s Development: Lungs are almost fully developed, and baby gains weight rapidly. Skin thickens, and fat layers form.',
+      'image': 'assets/8.jpg',
     },
     {
-      'week': '18',
-      'babyInfo': 'If you haven’t already felt the baby moving around in the womb, you likely will around this time. Within a couple weeks after that, other people should be able to feel baby movements from outside your stomach.',
-      'lifeAdvice': 'Bond with your baby by talking or singing to them as they start to feel your movements. Schedule your mid-pregnancy checkup to monitor your progress.'
+      'month': '9',
+      'weeks': '33 to 36',
+      'babyInfo': 'The lungs are nearly mature. The fetus continues to gain weight. The fetus usually moves to a head-down position. The fetus is about 19 inches long & weighs more than 5 pounds.',
+      'lifeAdvice': 'Nutrition: Eat omega-3 rich foods (salmon, walnuts) for brain development. Stay hydrated. Stock up on nutritious foods for postpartum recovery.\n\nExercise: Practice prenatal yoga for relaxation and childbirth preparation. Continue breathing exercises to manage stress. Prioritize rest to conserve energy.\n\nHealthcare: Schedule regular check-ups to monitor growth. Finalize your birth plan and attend childbirth classes. Plan for postpartum care, including breastfeeding support.\n\nBaby’s Development: Baby is fully developed and ready for birth, gaining weight and preparing for life outside the womb.',
+      'image': null,
     },
     {
-      'week': '19',
-      'babyInfo': 'The baby\'s sense of motion has developed, and hearing continues to improve. The baby can make facial expressions and may begin sucking his or her thumb.',
-      'lifeAdvice': 'Focus on a nutrient-rich diet with plenty of fruits and vegetables to support your baby’s growth. Consider joining a prenatal class to connect with other expectant parents.'
-    },
-    {
-      'week': '20',
-      'babyInfo': 'The baby\'s gender might be detectable at a mid-pregnancy ultrasound. Taste buds are developing, and both the brain and hair should be growing quickly.',
-      'lifeAdvice': 'Stay hydrated and get plenty of rest to support your growing belly. Start planning for your baby’s arrival by researching maternity leave options.'
-    },
-    {
-      'week': '21',
-      'babyInfo': 'Those little butterfly feelings develop into kicks and thumps! Your baby may have a definite pattern of activity. Length 14-16 cm | weight 250g. Facial features are becoming more recognizable with growing eyebrows and eyelashes.',
-      'lifeAdvice': 'Manage stress with light activities like prenatal yoga or meditation. Begin reading about labor and delivery to feel prepared for the next stages.'
-    },
-    {
-      'week': '22',
-      'babyInfo': 'The baby\'s lungs are developing quickly, though they won’t be functional for a few more weeks. The baby will inhale and exhale amniotic fluid and has begun sleeping and waking at regular intervals.',
-      'lifeAdvice': 'Focus on a balanced diet and start gathering newborn essentials like diapers and clothes. Take time to relax and bond with your baby through their movements.'
-    },
-    {
-      'week': '23',
-      'babyInfo': 'The baby\'s sense of motion has developed, and hearing continues to improve. The baby may weigh just over a pound and be up to a foot long.',
-      'lifeAdvice': 'Stay active with gentle prenatal exercises, but avoid overexertion. Connect with other expectant mothers for support and to share experiences.'
-    },
-    {
-      'week': '24',
-      'babyInfo': 'Taste buds are developing, and both the brain and hair should be growing quickly. The baby may weigh just over a pound and be up to a foot long.',
-      'lifeAdvice': 'Ensure you’re getting enough sleep and hydration to support your baby’s rapid growth. Consider attending a prenatal class to learn about newborn care.'
-    },
-    {
-      'week': '27',
-      'babyInfo': 'Though the lungs won’t be functional for a few more weeks, they are developing quickly. The baby will inhale and exhale amniotic fluid, begin sleeping and waking at regular intervals, and may open and close eyes and suck fingers.',
-      'lifeAdvice': 'Prepare for more frequent doctor visits to monitor your baby’s development. Start packing a hospital bag with essentials for labor day.'
-    },
-    {
-      'week': '28',
-      'babyInfo': 'The baby may begin dreaming, and will have eyelashes and improved eyesight. The baby will also grow fingernails and toenails and may begin to increase in weight—up to over three pounds.',
-      'lifeAdvice': 'Stay active with gentle movements to prepare for labor. Begin discussing your birth plan with your healthcare provider to ensure a smooth delivery.'
-    },
-    {
-      'week': '32',
-      'babyInfo': 'The baby continues to grow, reaching nearly four pounds, with improved eyesight and longer fingernails and toenails.',
-      'lifeAdvice': 'Attend regular check-ups to monitor your baby’s growth. Rest often to manage any discomfort from Braxton-Hicks contractions and prepare for labor.'
-    },
-    {
-      'week': '34',
-      'babyInfo': 'The baby’s lungs and central nervous system continue to develop, and skin is becoming soft and smooth.',
-      'lifeAdvice': 'Focus on relaxation techniques to manage any stress as you near delivery. Ensure your hospital bag is ready and review your birth plan with your doctor.'
-    },
-    {
-      'week': '37',
-      'babyInfo': 'At this point, your baby is considered “early term.” Babies born at this time usually do well, but in an ideal situation, birth won’t take place for a few more weeks to allow the brain and lungs time to mature fully.',
-      'lifeAdvice': 'Stay active with light walking to encourage labor readiness. Be prepared for delivery by keeping your support system informed and ready.'
-    },
-    {
-      'week': '39',
-      'babyInfo': 'The baby is now considered full-term and is ready for birth. Average weight is roughly 7.5 pounds, and the average length is about 20 inches.',
-      'lifeAdvice': 'Rest as much as possible while awaiting labor. Ensure all baby essentials are ready at home, and stay in close contact with your healthcare provider.'
-    },
-    {
-      'week': '41',
-      'babyInfo': 'You’ve passed your due date, and the baby is now considered “late term.” Anything after 42 weeks is “post-term.” Baby health might be monitored with tests, and you may discuss inducing labor with your doctor.',
-      'lifeAdvice': 'Attend monitoring appointments to ensure your baby’s health. Discuss induction options with your doctor and stay calm while awaiting labor.'
+      'month': '10',
+      'weeks': '37 to 40',
+      'babyInfo': 'The fetus continues to gain weight. The lungs are mature. The fetus is about 20 inches long & weighs about 6 to 9 pounds.',
+      'lifeAdvice': 'Nutrition: Eat omega-3 rich foods (salmon, walnuts) for brain development. Stay hydrated. Stock up on nutritious foods for postpartum recovery.\n\nExercise: Practice prenatal yoga for relaxation and childbirth preparation. Continue breathing exercises to manage stress. Prioritize rest to conserve energy.\n\nHealthcare: Schedule regular check-ups to monitor growth. Finalize your birth plan and attend childbirth classes. Plan for postpartum care, including breastfeeding support.',
+      'image': null,
     },
   ];
 
@@ -139,7 +97,7 @@ class HomeScreen extends StatelessWidget {
                     enlargeCenterPage: true,
                     scrollDirection: Axis.horizontal,
                   ),
-                  items: weekData.map((data) {
+                  items: monthData.map((data) {
                     return Builder(
                       builder: (BuildContext context) {
                         return Container(
@@ -169,8 +127,8 @@ class HomeScreen extends StatelessWidget {
                                     labelColor: Colors.pink[800],
                                     unselectedLabelColor: Colors.grey[600],
                                     tabs: const [
-                                      Tab(text: 'Your Baby'),
                                       Tab(text: 'Your Life'),
+                                      Tab(text: 'Your Baby'),
                                     ],
                                   ),
                                 ),
@@ -183,11 +141,11 @@ class HomeScreen extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Week ${data['week']}',
+                                              'Month ${data['month']} (Weeks ${data['weeks']})',
                                               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.pink[600]),
                                             ),
                                             const SizedBox(height: 10),
-                                            Text(data['babyInfo']!, style: const TextStyle(fontSize: 16)),
+                                            Text(data['lifeAdvice']!, style: const TextStyle(fontSize: 16)),
                                           ],
                                         ),
                                       ),
@@ -197,11 +155,19 @@ class HomeScreen extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Week ${data['week']}',
+                                              'Month ${data['month']} (Weeks ${data['weeks']})',
                                               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.pink[600]),
                                             ),
                                             const SizedBox(height: 10),
-                                            Text(data['lifeAdvice']!, style: const TextStyle(fontSize: 16)),
+                                            Text(data['babyInfo']!, style: const TextStyle(fontSize: 16)),
+                                            const SizedBox(height: 10),
+                                            if (data['image'] != null)
+                                              Image.asset(
+                                                data['image']!,
+                                                height: 150,
+                                                width: double.infinity,
+                                                fit: BoxFit.cover,
+                                              ),
                                           ],
                                         ),
                                       ),

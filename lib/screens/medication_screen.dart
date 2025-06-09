@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class MedicationScreen extends StatelessWidget {
+class MedicationScreen extends StatefulWidget {
+  @override
+  _MedicationScreenState createState() => _MedicationScreenState();
+}
+
+class _MedicationScreenState extends State<MedicationScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  String _filterType = 'Name'; // Default filter type
+  List<Map<String, dynamic>> _filteredMedications = [];
+
   final List<Map<String, dynamic>> medications = [
     {
       'name': 'Adalat (Nifedipine)',
+      'barcode': '1234567890123',
       'category': 'C',
       'use': 'Calcium channel blocker for hypertension/preterm labor',
       'dose': 'Not specified',
       'when_to_take': 'Can be taken with or without food.',
       'additional_info': '',
+      'image': '',
     },
     {
       'name': 'Aldomet (Methyldopa)',
+      'barcode': '2345678901234',
       'category': 'B',
       'use': 'Safe for hypertension',
       'dose': 'Not specified',
@@ -20,6 +33,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Amaryl (Glimepiride)',
+      'barcode': '3456789012345',
       'category': 'C',
       'use': 'Type 2 diabetes',
       'dose': '1-4 mg once daily',
@@ -28,6 +42,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Amoxil (Amoxicillin)',
+      'barcode': '4567890123456',
       'category': 'B',
       'use': 'Safe antibiotic for infections',
       'dose': '500 mg every 8 hours',
@@ -36,6 +51,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Apresoline (Hydralazine)',
+      'barcode': '5678901234567',
       'category': 'C',
       'use': 'Hypertensive emergencies (IV)',
       'dose': 'Not specified',
@@ -44,6 +60,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Augmentin (Amoxicillin + Clavulanic Acid)',
+      'barcode': '6789012345678',
       'category': 'B',
       'use': 'Bacterial infections',
       'dose': '500 mg every 8 hours',
@@ -52,6 +69,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Azelaic Acid Cream',
+      'barcode': '7890123456789',
       'category': 'B',
       'use': 'Acne treatment',
       'dose': 'Not specified',
@@ -60,6 +78,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Bacitracin Ointment',
+      'barcode': '8901234567890',
       'category': 'B',
       'use': 'Antibiotic',
       'dose': 'Not specified',
@@ -68,6 +87,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Benadryl (Diphenhydramine)',
+      'barcode': '9012345678901',
       'category': 'B',
       'use': 'Sedating antihistamine. Use with caution late pregnancy',
       'dose': 'Not specified',
@@ -76,6 +96,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Benzoyl Peroxide Cream',
+      'barcode': '0123456789012',
       'category': 'C',
       'use': 'Acne treatment',
       'dose': 'Not specified',
@@ -84,6 +105,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Betamethasone Dipropionate Cream',
+      'barcode': '1234567890124',
       'category': 'C',
       'use': 'Anti-inflammatory corticosteroid',
       'dose': 'Not specified',
@@ -92,6 +114,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Calamine Lotion',
+      'barcode': '2345678901235',
       'category': 'Not Classified',
       'use': 'Skin protectant and anti-itch',
       'dose': 'Not specified',
@@ -100,6 +123,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Calcipotriol Cream',
+      'barcode': '3456789012346',
       'category': 'C',
       'use': 'Psoriasis treatment',
       'dose': 'Not specified',
@@ -108,6 +132,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Calcium + Vitamin D',
+      'barcode': '4567890123457',
       'category': 'A (High Vitamin D may be Category C)',
       'use': 'Essential for bone health',
       'dose': 'Calcium: 1000–1200 mg/day, Vitamin D: 400–1000 IU/day',
@@ -116,6 +141,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Canesten (Clotrimazole – topical)',
+      'barcode': '5678901234568',
       'category': 'B',
       'use': 'Vaginal yeast infections',
       'dose': 'Not specified',
@@ -124,6 +150,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Capsaicin Cream',
+      'barcode': '6789012345679',
       'category': 'C',
       'use': 'Pain relief',
       'dose': 'Not specified',
@@ -132,6 +159,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Cardura (Doxazosin)',
+      'barcode': '7890123456780',
       'category': 'C',
       'use': 'Hypertension, BPH',
       'dose': '1-8 mg once daily',
@@ -140,22 +168,26 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Choriomon / Pregnyl (hCG injections)',
+      'barcode': '8901234567891',
       'category': 'C',
-      'use': 'Stimulates corpus luteum to maintain progesterone',
+      'use': 'Stimulates corpusBmp luteum to maintain progesterone',
       'dose': '5000–10000 IU every 3–5 days. Requires monitoring',
       'when_to_take': 'Injected, so food intake is not relevant for administration.',
       'additional_info': 'Mimics LH, supports corpus luteum to produce progesterone until placenta takes over.',
     },
     {
       'name': 'Cialis (Tadalafil)',
+      'barcode': '9012345678902',
       'category': 'B',
       'use': 'Erectile dysfunction',
       'dose': '10 mg before sexual activity',
       'when_to_take': 'Can be taken with or without food.',
       'additional_info': 'Contraindications: Nitrate use. Side effects: Headache.',
+      'image': 'assets/cialis.jpg',
     },
     {
       'name': 'Cipralex (Escitalopram)',
+      'barcode': '0123456789013',
       'category': 'C',
       'use': 'Depression',
       'dose': '10-20 mg once daily',
@@ -164,14 +196,17 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Claritin (Loratadine)',
+      'barcode': '1234567890125',
       'category': 'B',
       'use': 'Non-sedating antihistamine. Safe during pregnancy',
       'dose': 'Not specified',
       'when_to_take': 'Can be taken with or without food.',
       'additional_info': '',
+      'image': 'assets/claritin.jpg',
     },
     {
       'name': 'Clexane (Enoxaparin) / Heparin',
+      'barcode': '2345678901236',
       'category': 'B',
       'use': 'Anticoagulants for thrombophilia',
       'dose': 'Not specified',
@@ -180,6 +215,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Clindamycin Cream',
+      'barcode': '3456789012347',
       'category': 'B',
       'use': 'Antibiotic for acne',
       'dose': 'Not specified',
@@ -188,6 +224,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Clotrimazole Cream',
+      'barcode': '4567890123458',
       'category': 'B',
       'use': 'Antifungal',
       'dose': 'Not specified',
@@ -196,6 +233,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Colace (Docusate Sodium)',
+      'barcode': '5678901234569',
       'category': 'C',
       'use': 'Stool softener',
       'dose': 'Not specified',
@@ -204,14 +242,17 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Crestor (Rosuvastatin)',
+      'barcode': '6789012345670',
       'category': 'X',
       'use': 'Hypercholesterolemia',
       'dose': '5-40 mg once daily',
       'when_to_take': 'Can be taken with or without food.',
       'additional_info': 'Contraindications: Liver disease. Side effects: Muscle pain.',
+      'image': 'assets/crestor.jpg',
     },
     {
       'name': 'Crinone (Progesterone)',
+      'barcode': '7890123456781',
       'category': 'B (vaginal) / D (oral high dose)',
       'use': 'Luteal phase support',
       'dose': '200–400 mg/day (vaginal)',
@@ -220,6 +261,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Cytotec (Misoprostol)',
+      'barcode': '8901234567892',
       'category': 'X',
       'use': 'Abortion, gastric ulcers (off-label)',
       'dose': 'Not specified',
@@ -228,14 +270,17 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Danol (Danazol)',
+      'barcode': '9012345678903',
       'category': 'X',
       'use': 'Endometriosis. Causes fetal virilization',
       'dose': 'Not specified',
       'when_to_take': 'Can be taken with or without food.',
       'additional_info': '',
+      'image': 'assets/danazol.jpg',
     },
     {
       'name': 'Dexamethasone',
+      'barcode': '0123456789014',
       'category': 'C',
       'use': 'Inflammation',
       'dose': '0.75-9 mg daily',
@@ -244,6 +289,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Diclegis (Doxylamine + Vitamin B6)',
+      'barcode': '1234567890126',
       'category': 'A',
       'use': 'Specifically for nausea/vomiting in pregnancy',
       'dose': 'Not specified',
@@ -252,6 +298,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Diclofenac',
+      'barcode': '2345678901237',
       'category': 'C (1st & 2nd trimester), D (3rd trimester)',
       'use': 'Pain, inflammation',
       'dose': '50 mg two to three times daily',
@@ -260,14 +307,17 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Dilatrend (Carvedilol)',
+      'barcode': '3456789012348',
       'category': 'C',
       'use': 'Hypertension, heart failure',
       'dose': '6.25-25 mg twice daily',
       'when_to_take': 'Can be taken with food to reduce side effects.',
       'additional_info': 'Contraindications: Severe bradycardia. Side effects: Fatigue.',
+      'image': 'assets/dilatrend.jpg',
     },
     {
       'name': 'Duphaston (Dydrogesterone)',
+      'barcode': '4567890123459',
       'category': 'B',
       'use': 'Supports endometrial function in progesterone deficiency',
       'dose': '10 mg, 2–3 times/day. Safe up to 12 weeks of pregnancy',
@@ -276,6 +326,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Ergometrine (Methergine)',
+      'barcode': '5678901234570',
       'category': 'X',
       'use': 'Postpartum bleeding control',
       'dose': 'Not specified',
@@ -284,14 +335,17 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Erythrocin (Erythromycin)',
+      'barcode': '6789012345671',
       'category': 'B',
       'use': 'Alternative antibiotic for penicillin allergy',
       'dose': 'Not specified',
       'when_to_take': 'Best taken on an empty stomach (1 hour before or 2 hours after meals). Can be taken with food if it causes stomach upset.',
       'additional_info': '',
+      'image': 'assets/erythrocin.jpg',
     },
     {
       'name': 'Erythromycin Cream',
+      'barcode': '7890123456782',
       'category': 'B',
       'use': 'Antibiotic for acne and infections',
       'dose': 'Not specified',
@@ -300,6 +354,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Estrogen + Progestin Combos (e.g., Cyclo-Proginova)',
+      'barcode': '8901234567893',
       'category': 'X',
       'use': 'Hormonal therapy or contraceptives accidentally taken during pregnancy',
       'dose': 'Not specified',
@@ -308,6 +363,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Ferrous Sulfate (Iron)',
+      'barcode': '9012345678904',
       'category': 'A',
       'use': 'Prevention and treatment of iron-deficiency anemia',
       'dose': '30–60 mg elemental iron daily',
@@ -316,14 +372,17 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Folic Acid',
+      'barcode': '0123456789015',
       'category': 'A',
       'use': 'Prevents neural tube defects',
       'dose': '400–800 mcg/day (up to 5 mg in high-risk cases). Recommended preconception and in 1st trimester',
       'when_to_take': 'Can be taken with or without food. Taking it with food might be preferable if you experience any mild nausea.',
       'additional_info': 'Synthetic form of folate (Vitamin B9), crucial for DNA synthesis, repair, and methylation during rapid cell division.',
+      'image': 'assets/folic.jpg',
     },
     {
       'name': 'Fusidic Acid Cream',
+      'barcode': '1234567890127',
       'category': 'B',
       'use': 'Antibiotic',
       'dose': 'Not specified',
@@ -332,6 +391,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'G.C. Mol Effervescent',
+      'barcode': '2345678901238',
       'category': 'Paracetamol: B, Guaifenesin & Vitamin C: Not specifically classified',
       'use': 'Symptomatic relief in adults: fever, headache, sore throat, common cold, and influenza. Guaifenesin acts as an expectorant to loosen mucus. Vitamin C supports immune function.',
       'dose': '1–2 sachets every 4–6 hours, up to 3–4 sachets per day',
@@ -343,6 +403,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Gas-X (Simethicone)',
+      'barcode': '3456789012349',
       'category': 'C',
       'use': 'Gas relief, generally safe',
       'dose': 'Not specified',
@@ -351,22 +412,27 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Glucophage (Metformin)',
+      'barcode': '4567890123460',
       'category': 'B',
       'use': 'Type 2 diabetes',
       'dose': '500-1000 mg twice daily',
       'when_to_take': 'Can be taken with food to reduce GI upset.',
       'additional_info': 'Contraindications: Renal impairment. Side effects: GI upset.',
+      'image': 'assets/glucophage.jpg',
     },
     {
       'name': 'Hydrocortisone Cream',
+      'barcode': '5678901234571',
       'category': 'C',
       'use': 'Anti-inflammatory, corticosteroid',
       'dose': 'Not specified',
       'when_to_take': 'Applied topically, so food intake is not relevant.',
       'additional_info': 'Used for eczema and dermatitis; low potency; relatively safe but avoid prolonged use in pregnancy.',
+      'image': 'assets/hydrocortisone.jpg',
     },
     {
       'name': 'Imiquimod Cream',
+      'barcode': '6789012345672',
       'category': 'C',
       'use': 'Immunomodulator for warts and skin cancers',
       'dose': 'Not specified',
@@ -375,6 +441,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Imodium (Loperamide)',
+      'barcode': '7890123456783',
       'category': 'C',
       'use': 'For diarrhea, use cautiously',
       'dose': 'Not specified',
@@ -383,6 +450,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Imutrexate (Methotrexate)',
+      'barcode': '8901234567894',
       'category': 'X',
       'use': 'Cancer, autoimmune, ectopic pregnancy. Teratogenic',
       'dose': 'Not specified',
@@ -391,6 +459,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Keflex (Cephalexin)',
+      'barcode': '9012345678905',
       'category': 'B',
       'use': 'Bacterial infections',
       'dose': '250-500 mg every 6 hours',
@@ -399,6 +468,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Ketoconazole Cream',
+      'barcode': '0123456789016',
       'category': 'C',
       'use': 'Antifungal',
       'dose': 'Not specified',
@@ -407,6 +477,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Lasix (Furosemide)',
+      'barcode': '1234567890128',
       'category': 'C',
       'use': 'Diuretic, for severe cases only',
       'dose': '20-80 mg daily',
@@ -415,6 +486,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Levitra (Vardenafil)',
+      'barcode': '2345678901239',
       'category': 'B',
       'use': 'Erectile dysfunction',
       'dose': '10 mg before sexual activity',
@@ -423,6 +495,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Lidocaine Cream',
+      'barcode': '3456789012350',
       'category': 'B',
       'use': 'Local anesthetic',
       'dose': 'Not specified',
@@ -431,6 +504,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Lipitor (Atorvastatin)',
+      'barcode': '4567890123461',
       'category': 'X',
       'use': 'Hypercholesterolemia',
       'dose': '10-40 mg once daily',
@@ -439,6 +513,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Low-Dose Aspirin (Acetylsalicylic Acid / Baby Aspirin)',
+      'barcode': '5678901234572',
       'category': 'C (early) / D (3rd trimester)',
       'use': 'Improves placental circulation in high-risk pregnancies',
       'dose': '75–100 mg/day. Usually stopped before the 3rd trimester',
@@ -447,6 +522,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Marevan / Coumadin / Warfarin',
+      'barcode': '6789012345673',
       'category': 'X (except limited 2nd trimester use)',
       'use': 'Anticoagulation, high fetal risk',
       'dose': 'Not specified',
@@ -455,6 +531,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Metamucil / FiberCon (Fiber supplements)',
+      'barcode': '7890123456784',
       'category': 'A',
       'use': 'Bulk-forming laxatives',
       'dose': 'Not specified',
@@ -463,6 +540,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Metronidazole Cream',
+      'barcode': '8901234567895',
       'category': 'B',
       'use': 'Antibiotic and antiprotozoal (rosacea)',
       'dose': 'Not specified',
@@ -471,6 +549,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Miconazole Cream',
+      'barcode': '9012345678906',
       'category': 'C',
       'use': 'Antifungal',
       'dose': 'Not specified',
@@ -479,6 +558,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Mifepristone',
+      'barcode': '0123456789017',
       'category': 'X',
       'use': 'Medical abortion',
       'dose': 'Not specified',
@@ -487,6 +567,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Motilium (Domperidone)',
+      'barcode': '1234567890129',
       'category': 'C',
       'use': 'Nausea, vomiting, gastroparesis',
       'dose': '10 mg three times daily',
@@ -495,6 +576,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Mucinex (Guaifenesin)',
+      'barcode': '2345678901240',
       'category': 'C',
       'use': 'Expectorant. Avoid in 1st trimester unless necessary',
       'dose': 'Not specified',
@@ -503,6 +585,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Mupirocin Cream',
+      'barcode': '3456789012351',
       'category': 'B',
       'use': 'Antibiotic',
       'dose': 'Not specified',
@@ -511,6 +594,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Neomycin Sulfate Cream',
+      'barcode': '4567890123462',
       'category': 'D',
       'use': 'Antibiotic',
       'dose': 'Not specified',
@@ -519,6 +603,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Nexium (Esomeprazole)',
+      'barcode': '5678901234573',
       'category': 'B',
       'use': 'GERD',
       'dose': '20-40 mg once daily',
@@ -527,14 +612,17 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Normix (Rifaximin)',
+      'barcode': '6789012345674',
       'category': 'C',
       'use': 'Traveler’s diarrhea',
       'dose': '200 mg three times daily',
       'when_to_take': 'Can be taken with or without food.',
       'additional_info': 'Contraindications: Severe hepatic impairment. Side effects: Nausea.',
+      'image': 'assets/normix.jpg',
     },
     {
       'name': 'Norvasc (Amlodipine)',
+      'barcode': '7890123456785',
       'category': 'C',
       'use': 'Hypertension, angina',
       'dose': '5-10 mg once daily',
@@ -543,6 +631,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Panadol / Tylenol (Paracetamol / Acetaminophen)',
+      'barcode': '8901234567896',
       'category': 'B',
       'use': 'First-line for pain and fever',
       'dose': '500–1000 mg every 4–6 hours (max 4 g/day). Safe all trimesters',
@@ -551,6 +640,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Pepcid (Famotidine)',
+      'barcode': '9012345678907',
       'category': 'B',
       'use': 'H2 blocker for GERD',
       'dose': 'Not specified',
@@ -559,6 +649,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Pimecrolimus Cream',
+      'barcode': '0123456789018',
       'category': 'C',
       'use': 'Immunomodulator for eczema',
       'dose': 'Not specified',
@@ -567,6 +658,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Plavix (Clopidogrel)',
+      'barcode': '1234567890130',
       'category': 'B',
       'use': 'Prevention of clots',
       'dose': '75 mg once daily',
@@ -575,6 +667,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Proluton Depot (Hydroxyprogesterone Caproate)',
+      'barcode': '2345678901241',
       'category': 'D',
       'use': 'Prevents preterm labor in high-risk women',
       'dose': '250 mg IM weekly from week 16–36. Reserved for selected cases',
@@ -583,6 +676,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Proscar / Avodart (Finasteride, Dutasteride)',
+      'barcode': '3456789012352',
       'category': 'X',
       'use': 'BPH, baldness. Causes fetal feminization abnormalities',
       'dose': 'Not specified',
@@ -591,6 +685,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Retinoid Cream (Tretinoin)',
+      'barcode': '4567890123463',
       'category': 'C',
       'use': 'Acne treatment',
       'dose': 'Not specified',
@@ -599,6 +694,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Roaccutane / Netlook (Isotretinoin)',
+      'barcode': '5678901234574',
       'category': 'X',
       'use': 'Severe acne. Causes severe birth defects',
       'dose': 'Not specified',
@@ -607,6 +703,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Robitussin DM (Dextromethorphan)',
+      'barcode': '6789012345675',
       'category': 'C',
       'use': 'Cough suppressant. Use if needed',
       'dose': 'Not specified',
@@ -615,6 +712,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Salicylic Acid Cream',
+      'barcode': '7890123456786',
       'category': 'C',
       'use': 'Keratolytic',
       'dose': 'Not specified',
@@ -623,6 +721,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Septrin (Trimethoprim + Sulfamethoxazole)',
+      'barcode': '8901234567897',
       'category': 'D',
       'use': 'UTIs',
       'dose': 'Double-strength tablet twice daily',
@@ -631,6 +730,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Silver Sulfadiazine Cream',
+      'barcode': '9012345678908',
       'category': 'C',
       'use': 'Antimicrobial for burns',
       'dose': 'Not specified',
@@ -639,6 +739,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Sulfur Cream',
+      'barcode': '0123456789019',
       'category': 'Not Classified',
       'use': 'Antibacterial and keratolytic',
       'dose': 'Not specified',
@@ -647,6 +748,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Syntocinon / Pitocin (Oxytocin)',
+      'barcode': '1234567890131',
       'category': 'X (if not in labor)',
       'use': 'Induce labor under supervision',
       'dose': 'Not specified',
@@ -655,6 +757,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Syntometrine (Oxytocin + Ergometrine)',
+      'barcode': '2345678901242',
       'category': 'X',
       'use': 'Postpartum bleeding control',
       'dose': 'Not specified',
@@ -663,6 +766,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Synthroid (Levothyroxine)',
+      'barcode': '3456789012353',
       'category': 'A',
       'use': 'Hypothyroidism',
       'dose': '25-200 mcg once daily',
@@ -671,6 +775,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Tacrolimus Cream',
+      'barcode': '4567890123464',
       'category': 'C',
       'use': 'Immunomodulator',
       'dose': 'Not specified',
@@ -679,6 +784,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Telfast (Fexofenadine)',
+      'barcode': '5678901234575',
       'category': 'C',
       'use': 'Allergies',
       'dose': '120 mg once or twice daily',
@@ -687,6 +793,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Temazepam, Triazolam',
+      'barcode': '6789012345676',
       'category': 'D',
       'use': 'Insomnia. Teratogenic risk',
       'dose': 'Not specified',
@@ -695,6 +802,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Thalix (Thalidomide)',
+      'barcode': '7890123456787',
       'category': 'X',
       'use': 'Multiple myeloma, leprosy. Causes severe limb deformities',
       'dose': 'Not specified',
@@ -703,6 +811,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Tolnaftate Cream',
+      'barcode': '8901234567898',
       'category': 'C',
       'use': 'Antifungal for athlete’s foot',
       'dose': 'Not specified',
@@ -711,6 +820,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Topical Phenylephrine (Preparation H)',
+      'barcode': '9012345678909',
       'category': 'Not specified',
       'use': 'Vasoconstrictor, relieves discomfort',
       'dose': 'Not specified',
@@ -719,6 +829,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Trandate (Labetalol)',
+      'barcode': '0123456789020',
       'category': 'C',
       'use': 'Alpha/beta-blocker, used in preeclampsia',
       'dose': 'Not specified',
@@ -727,6 +838,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Triamcinolone Acetonide Cream',
+      'barcode': '1234567890132',
       'category': 'C',
       'use': 'Anti-inflammatory corticosteroid',
       'dose': 'Not specified',
@@ -735,6 +847,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Tums (Calcium Carbonate)',
+      'barcode': '2345678901243',
       'category': 'B',
       'use': 'Antacid for occasional heartburn',
       'dose': 'Not specified',
@@ -743,6 +856,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Urea Cream',
+      'barcode': '3456789012354',
       'category': 'Not Classified',
       'use': 'Moisturizer and keratolytic',
       'dose': 'Not specified',
@@ -751,6 +865,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Utrogestan (Progesterone)',
+      'barcode': '4567890123465',
       'category': 'B (vaginal) / D (oral high dose)',
       'use': 'Luteal phase support',
       'dose': '200–400 mg/day (vaginal)',
@@ -759,6 +874,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Vasodilan (Isoxsuprine)',
+      'barcode': '5678901234576',
       'category': 'C',
       'use': 'Beta-agonist, rarely used',
       'dose': 'Not specified',
@@ -767,6 +883,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Ventolin (Salbutamol)',
+      'barcode': '6789012345677',
       'category': 'C',
       'use': 'Asthma',
       'dose': '2 puffs every 4-6 hours',
@@ -775,6 +892,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Vitamin B6 (Pyridoxine)',
+      'barcode': '7890123456788',
       'category': 'A',
       'use': 'Morning sickness relief',
       'dose': 'Not specified',
@@ -783,6 +901,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Voltaren (Diclofenac)',
+      'barcode': '8901234567899',
       'category': 'C (1st & 2nd trimester), D (3rd trimester)',
       'use': 'Pain and inflammation',
       'dose': '50 mg two to three times daily',
@@ -791,6 +910,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Witch Hazel Pads (Tucks)',
+      'barcode': '9012345678910',
       'category': 'Not specified',
       'use': 'Astringent and anti-inflammatory',
       'dose': 'Not specified',
@@ -799,6 +919,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Xanax (Alprazolam)',
+      'barcode': '0123456789021',
       'category': 'D',
       'use': 'Anxiety',
       'dose': '0.25-0.5 mg three times daily',
@@ -807,6 +928,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Xarelto (Rivaroxaban)',
+      'barcode': '1234567890133',
       'category': 'C',
       'use': 'Thromboembolism prevention',
       'dose': '10-20 mg once daily',
@@ -815,6 +937,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Yutopar (Ritodrine)',
+      'barcode': '2345678901244',
       'category': 'B',
       'use': 'Inhibits uterine contractions',
       'dose': 'Not specified',
@@ -823,6 +946,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Zantac (Ranitidine)',
+      'barcode': '3456789012355',
       'category': 'B',
       'use': 'GERD',
       'dose': '150 mg twice daily',
@@ -831,6 +955,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Zinc Oxide Ointment',
+      'barcode': '4567890123466',
       'category': 'Not Classified',
       'use': 'Skin barrier cream',
       'dose': 'Not specified',
@@ -839,6 +964,7 @@ class MedicationScreen extends StatelessWidget {
     },
     {
       'name': 'Zyrtec (Cetirizine)',
+      'barcode': '5678901234577',
       'category': 'B',
       'use': 'Non-sedating antihistamine. Safe during pregnancy',
       'dose': 'Not specified',
@@ -846,6 +972,38 @@ class MedicationScreen extends StatelessWidget {
       'additional_info': '',
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredMedications = medications; // Initially show all medications
+    _searchController.addListener(_filterMedications);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterMedications() {
+    final query = _searchController.text.trim();
+    setState(() {
+      if (query.isEmpty) {
+        _filteredMedications = medications;
+      } else {
+        if (_filterType == 'Name') {
+          _filteredMedications = medications
+              .where((med) => med['name'].toLowerCase().contains(query.toLowerCase()))
+              .toList();
+        } else {
+          _filteredMedications = medications
+              .where((med) => med['barcode'].contains(query))
+              .toList();
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -873,12 +1031,55 @@ class MedicationScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          hintText: _filterType == 'Name' ? 'Search by name...' : 'Search by barcode...',
+                          prefixIcon: Icon(Icons.search, color: Colors.pink[800]),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(color: Colors.pink[300]!),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                        ),
+                        keyboardType: _filterType == 'Barcode' ? TextInputType.number : TextInputType.text,
+                        inputFormatters: _filterType == 'Barcode'
+                            ? [FilteringTextInputFormatter.digitsOnly]
+                            : [],
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    DropdownButton<String>(
+                      value: _filterType,
+                      items: ['Name', 'Barcode']
+                          .map((type) => DropdownMenuItem(
+                        value: type,
+                        child: Text(type),
+                      ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _filterType = value!;
+                          _searchController.clear();
+                          _filterMedications();
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(8.0),
-                  itemCount: medications.length,
+                  itemCount: _filteredMedications.length,
                   itemBuilder: (context, index) {
-                    final medication = medications[index];
+                    final medication = _filteredMedications[index];
                     return Card(
                       elevation: 4,
                       margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -903,6 +1104,22 @@ class MedicationScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
+                                    if (medication['image'] != null && medication['image'].isNotEmpty)
+                                      Column(
+                                        children: [
+                                          Image.asset(
+                                            medication['image'],
+                                            height: 150,
+                                            width: 200,
+                                            fit: BoxFit.contain,
+                                            errorBuilder: (context, error, stackTrace) => const Text('Image not available'),
+                                          ),
+                                          const SizedBox(height: 10),
+                                        ],
+                                      ),
+                                    const SizedBox(height: 10),
+                                    Text('Barcode: ${medication['barcode']}'),
+                                    const SizedBox(height: 10),
                                     Text('Category: ${medication['category']!}'),
                                     const SizedBox(height: 10),
                                     Text('Use: ${medication['use']!}'),
